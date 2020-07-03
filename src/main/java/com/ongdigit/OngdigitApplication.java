@@ -64,7 +64,7 @@ public class OngdigitApplication implements CommandLineRunner {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date datePlace = sdf.parse(place.getDateReservation());
-        int hourPlace = Integer.parseInt(place.getTimeReservation());
+        int hourPlace = Integer.parseInt(place.getTimeReservation().split(",")[0]);
         Date now = new Date();
 
         switch (compareDate(datePlace, now)){
@@ -74,6 +74,7 @@ public class OngdigitApplication implements CommandLineRunner {
                 break;
             case 0:
                 if (hourPlace < now.getHours()) {
+                    System.out.println("ici " + hourPlace);
                     place.setAccess(false);
                     placeRestService.update(place.getId(), place);
                 }
