@@ -1,14 +1,16 @@
 package com.ongdigit.restServices;
 
-import com.ongdigit.dao.ServiceRepository;
 import com.ongdigit.dao.UserRepository;
-import com.ongdigit.entities.Service;
 import com.ongdigit.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/listUsers")
 public class UserRestService {

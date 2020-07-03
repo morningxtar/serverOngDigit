@@ -25,4 +25,6 @@ public class Place implements Serializable {
     private String userEmail;
     @Column(nullable = false)
     private boolean access;
+    @Column(nullable = false)
+    private boolean presence;
 }

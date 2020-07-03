@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/listPlaces")
 public class PlaceRestService {
@@ -51,5 +52,7 @@ public class PlaceRestService {
     public List<Place> placesByCoordonnee(@RequestParam("date") String date, @RequestParam("time") String time, @RequestParam("machine") String machine) {
         return placeRepository.findPlacesByDateReservationAndTimeReservationAndComputerNumber(date, time, machine);
     }
+
+
 
 }

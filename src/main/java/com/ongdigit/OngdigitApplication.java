@@ -42,7 +42,7 @@ public class OngdigitApplication implements CommandLineRunner {
         );
     }
 
-    @Scheduled(cron = "0 0 8-17 * * ?")
+    @Scheduled(cron = "0 * 8-17 * * ?")
     public void fixedDelaySch() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
@@ -66,19 +66,32 @@ public class OngdigitApplication implements CommandLineRunner {
         Date datePlace = sdf.parse(place.getDateReservation());
         int hourPlace = Integer.parseInt(place.getTimeReservation());
         Date now = new Date();
-        switch (now.compareTo(datePlace)){
+
+        switch (compareDate(datePlace, now)){
             case 1:
                 place.setAccess(false);
                 placeRestService.update(place.getId(), place);
                 break;
             case 0:
                 if (hourPlace < now.getHours()) {
-                    System.out.println(hourPlace + "  " + now.getHours());
                     place.setAccess(false);
+                    placeRestService.update(place.getId(), place);
                 }
-                placeRestService.update(place.getId(), place);
                 break;
         }
     }
 
+    int compareDate(Date datePlace, Date now){
+
+        int check = 2;
+
+        if (datePlace.getDate() == now.getDate() && datePlace.getMonth() == now.getMonth() && datePlace.getYear() == now.getYear()){
+            check = 0;
+        }
+        else if ((datePlace.getDate() < now.getDate() && datePlace.getMonth() == now.getMonth() && datePlace.getYear() == now.getYear()) || (datePlace.getMonth() < now.getMonth() && datePlace.getYear() == now.getYear()) || datePlace.getYear() < now.getYear()){
+            check = 1;
+        }
+
+        return check;
+    }
 }
