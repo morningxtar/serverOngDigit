@@ -23,8 +23,8 @@ public class Place implements Serializable {
     private String dateReservation;
     private String timeReservation;
     private String userEmail;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default 1")
     private boolean access;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default 0")
     private boolean presence;
 }

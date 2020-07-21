@@ -11,11 +11,14 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin("*")
 @SpringBootApplication
@@ -42,14 +45,16 @@ public class OngdigitApplication implements CommandLineRunner {
         );
     }
 
-    @Scheduled(cron = "0 * 8-17 * * ?")
+    @Scheduled(cron = "0 * 8-18 * * ?")
     public void fixedDelaySch() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
         String strDate = sdf.format(now);
-        System.out.println("Fixed Delay scheduler:: " + strDate);
-
-        placeRestService.placeList().forEach(
+        String text = "Fixed Delay scheduler:: " + strDate;
+        System.out.println(text);
+        List<Place> placeList = placeRestService.placeList();
+        //System.out.println("placeid" + placeList);
+        placeList.forEach(
                 place -> {
                     try {
                         changeAccess(place);
@@ -66,7 +71,9 @@ public class OngdigitApplication implements CommandLineRunner {
         Date datePlace = sdf.parse(place.getDateReservation());
         int hourPlace = Integer.parseInt(place.getTimeReservation().split(",")[1]);
         Date now = new Date();
-
+//        System.out.println("ici " + place.getId());
+//        System.out.println("ici " + place.getDateReservation());
+//        System.out.println("ici " + compareDate(datePlace, now));
         switch (compareDate(datePlace, now)){
             case 1:
                 place.setAccess(false);
@@ -74,9 +81,10 @@ public class OngdigitApplication implements CommandLineRunner {
                 break;
             case 0:
                 if (hourPlace < now.getHours()) {
-                    System.out.println("ici " + hourPlace);
+//                    System.out.println("ici0 " + place.getId());
+//                    System.out.println("ici0 " + place.getComputerNumber());
                     place.setAccess(false);
-                    placeRestService.update(place.getId(), place);
+                    System.out.println(placeRestService.update(place.getId(), place));
                 }
                 break;
         }
