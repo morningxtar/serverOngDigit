@@ -13,22 +13,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User implements Serializable {
+public class Enrole implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String identity;
-    @Column(unique = true)
+    private String nom;
+    private String prenoms;
+    private String dateNaissance;
+    private String lieuNaissance;
+    private String nationalite;
+    private String contact;
     private String email;
-    private String password;
-    private String comments;
-    private String userType;
-
-    public String getEmail() {
-        return email;
-    }
 }

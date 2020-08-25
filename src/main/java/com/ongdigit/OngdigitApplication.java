@@ -45,6 +45,7 @@ public class OngdigitApplication implements CommandLineRunner {
         );
     }
 
+    //tâche planifiée qui chaque minute de 8h à 18h chaque jour
     @Scheduled(cron = "0 * 8-18 * * ?")
     public void fixedDelaySch() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
